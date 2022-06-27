@@ -81,7 +81,7 @@ App = {
       // Load the total grocery count from the blockchain
       const groceryCount = await App.groceryList.groceryCount()
       const $groceryItemTemplate = $('.groceryItemTemplate')
-  
+    // alert(groceryCount)
       // Render out each groceryItem with a new groceryItem template
       for (var i = 1; i <= groceryCount; i++) {
         // Fetch the grocery data from the blockchain
@@ -89,7 +89,7 @@ App = {
         const groceryId = groceryItem[0].toNumber()
         const groceryContent = groceryItem[1]
         const groceryBought = groceryItem[2]
-  
+        // alert(groceryContent)
         // Create the html for the grocery Item
         const $newGroceryItemTemplate = $groceryItemTemplate.clone()
         $newGroceryItemTemplate.find('.content').html(groceryContent)
@@ -110,17 +110,21 @@ App = {
       }
     },
   
-    createTask: async () => {
+    createItem:  () => {
+        // alert('in create')
       App.setLoading(true)
       const content = $('#newTask').val()
-      await App.groceryList.createTask(content)
+       App.groceryList.createItem(content, (err,data)=>{
+       console.log('created','err',err,'data',data)
+       })
       window.location.reload()
     },
   
-    toggleCompleted: async (e) => {
+    toggleBought: async (e) => {
       App.setLoading(true)
       const taskId = e.target.name
-      await App.groceryList.toggleCompleted(taskId)
+    //   alert(taskId)
+      await App.groceryList.toggleBought(taskId)
       window.location.reload()
     },
   
